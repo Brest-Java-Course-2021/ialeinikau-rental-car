@@ -1,0 +1,2 @@
+INSERT INTO CAR (CAR_MODEL) values ('AUDI');
+INSERT INTO CAR (CAR_MODEL) values ('BMW');
