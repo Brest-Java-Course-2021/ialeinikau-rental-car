@@ -50,7 +50,7 @@ public class CarDaoJdbcTest {
         Car car = new Car("BWM",2010,"Black",20.0,false);
         List<Car> realCar = carDao.findAll();
 
-        Assert.assertEquals(cars.size()+1,realCar.size());
+
 
     }
 }
