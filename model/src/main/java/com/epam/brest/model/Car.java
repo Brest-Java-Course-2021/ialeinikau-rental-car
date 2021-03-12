@@ -1,5 +1,7 @@
 package com.epam.brest.model;
 
+import java.util.Objects;
+
 public class Car {
 
     private Integer carId;
@@ -83,5 +85,18 @@ public class Car {
                 ", pricePerDay=" + pricePerDay +
                 ", leased=" + leased +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return leased == car.leased && Objects.equals(carId, car.carId) && Objects.equals(modelCar, car.modelCar) && Objects.equals(yearOfIssue, car.yearOfIssue) && Objects.equals(carColor, car.carColor) && Objects.equals(pricePerDay, car.pricePerDay);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(carId, modelCar, yearOfIssue, carColor, pricePerDay, leased);
     }
 }
