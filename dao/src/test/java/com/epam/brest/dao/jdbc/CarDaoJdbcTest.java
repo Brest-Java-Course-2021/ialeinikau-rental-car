@@ -5,18 +5,20 @@ import com.epam.brest.model.Car;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:test-db.xml","classpath*:test-dao.xml"})
 public class CarDaoJdbcTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarDaoJdbcTest.class);
 
     @Autowired
     private CarDao carDao;
@@ -50,7 +52,14 @@ public class CarDaoJdbcTest {
         Car car = new Car("BWM",2010,"Black",20.0,false);
         List<Car> realCar = carDao.findAll();
 
+    }
 
-
+    @Test
+    public void testLogging(){
+        LOGGER.trace("hello trace");
+        LOGGER.debug("hello debug");
+        LOGGER.info("hello info");
+        LOGGER.warn("hello warn");
+        LOGGER.error("hello error");
     }
 }
