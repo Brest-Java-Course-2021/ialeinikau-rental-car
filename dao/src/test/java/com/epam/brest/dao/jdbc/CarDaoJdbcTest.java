@@ -62,4 +62,6 @@ public class CarDaoJdbcTest {
         LOGGER.warn("hello warn");
         LOGGER.error("hello error");
     }
+
+
 }

@@ -19,6 +19,8 @@ public class CarDaoJdbc implements CarDao {
     private static final String SQL_GET_ALL_CAR ="SELECT C.CAR_ID, C.CAR_MODEL FROM CAR AS C ORDER BY C.CAR_MODEL";
     private static final String SQL_GET_CAR_BY_ID ="SELECT C.CAR_ID, C.CAR_MODEL FROM CAR AS C WHERE C.CAR_ID = :CAR_ID";
     private static final String SQL_CREATE_CAR ="INSERT INTO CAR (CAR_MODEL) VALUES (:CAR_MODEL)";
+    private static final String SQL_CHECK_CAR = "";
+    private static final String SQL_UPDATE_CAR = "";
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
