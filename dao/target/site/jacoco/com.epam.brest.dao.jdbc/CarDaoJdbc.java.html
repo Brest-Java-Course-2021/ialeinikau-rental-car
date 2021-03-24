@@ -19,42 +19,44 @@ public class CarDaoJdbc implements CarDao {
     private static final String SQL_GET_ALL_CAR =&quot;SELECT C.CAR_ID, C.CAR_MODEL FROM CAR AS C ORDER BY C.CAR_MODEL&quot;;
     private static final String SQL_GET_CAR_BY_ID =&quot;SELECT C.CAR_ID, C.CAR_MODEL FROM CAR AS C WHERE C.CAR_ID = :CAR_ID&quot;;
     private static final String SQL_CREATE_CAR =&quot;INSERT INTO CAR (CAR_MODEL) VALUES (:CAR_MODEL)&quot;;
+    private static final String SQL_CHECK_CAR = &quot;&quot;;
+    private static final String SQL_UPDATE_CAR = &quot;&quot;;
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-<span class="fc" id="L25">    RowMapper rowMapper = BeanPropertyRowMapper.newInstance(Car.class);</span>
+<span class="fc" id="L27">    RowMapper rowMapper = BeanPropertyRowMapper.newInstance(Car.class);</span>
 
-<span class="fc" id="L27">    public CarDaoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {</span>
-<span class="fc" id="L28">        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L29">    public CarDaoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {</span>
+<span class="fc" id="L30">        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;</span>
+<span class="fc" id="L31">    }</span>
 
     @Override
     public List&lt;Car&gt; findAll() {
-<span class="fc" id="L33">        return namedParameterJdbcTemplate.query(SQL_GET_ALL_CAR, rowMapper);</span>
+<span class="fc" id="L35">        return namedParameterJdbcTemplate.query(SQL_GET_ALL_CAR, rowMapper);</span>
     }
 
     @Override
     public Car findById(Integer carId) {
-<span class="fc" id="L38">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_ID&quot; ,carId);</span>
-<span class="fc" id="L39">        return (Car) namedParameterJdbcTemplate.query(SQL_GET_CAR_BY_ID,sqlParameterSource,rowMapper).get(0);</span>
+<span class="fc" id="L40">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_ID&quot; ,carId);</span>
+<span class="fc" id="L41">        return (Car) namedParameterJdbcTemplate.query(SQL_GET_CAR_BY_ID,sqlParameterSource,rowMapper).get(0);</span>
     }
 
     @Override
     public Integer create(Car car) {
-<span class="nc" id="L44">        KeyHolder keyHolder =  new GeneratedKeyHolder();</span>
-<span class="nc" id="L45">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_MODEL&quot; ,car.getModelCar());</span>
-<span class="nc" id="L46">        namedParameterJdbcTemplate.update(SQL_CREATE_CAR,sqlParameterSource,keyHolder);</span>
-<span class="nc" id="L47">        return Objects.requireNonNull(keyHolder.getKey().intValue());</span>
+<span class="nc" id="L46">        KeyHolder keyHolder =  new GeneratedKeyHolder();</span>
+<span class="nc" id="L47">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_MODEL&quot; ,car.getModelCar());</span>
+<span class="nc" id="L48">        namedParameterJdbcTemplate.update(SQL_CREATE_CAR,sqlParameterSource,keyHolder);</span>
+<span class="nc" id="L49">        return Objects.requireNonNull(keyHolder.getKey().intValue());</span>
     }
 
     @Override
     public Integer update(Car car) {
-<span class="nc" id="L52">        return null;</span>
+<span class="nc" id="L54">        return null;</span>
     }
 
     @Override
     public Integer delete(Integer carId) {
-<span class="nc" id="L57">        return null;</span>
+<span class="nc" id="L59">        return null;</span>
     }
 
 }
