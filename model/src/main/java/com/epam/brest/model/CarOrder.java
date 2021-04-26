@@ -1,20 +1,14 @@
 package com.epam.brest.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CarOrder {
 
     private Integer orderId;
 
-    private Integer carId;
-
     private String rentersName;
 
-    private Date leaseDate;
-
-    private Integer leaseTerm;
-
-    private Date returnDate;
+    private LocalDate dateLeased;
 
     private boolean rentStatus;
 
@@ -24,19 +18,27 @@ public class CarOrder {
 
     private String rejectionReason;
 
-    public CarOrder() {
-    }
+    private Integer carId;
 
-    public CarOrder(Integer carId, String rentersName, Date leaseDate, Integer leaseTerm, Date returnDate, boolean rentStatus, Double carRepairBill, String informationAboutDamage, String rejectionReason) {
-        this.carId = carId;
+    public CarOrder(String rentersName, LocalDate dateLeased, boolean rentStatus, Double carRepairBill, String informationAboutDamage, String rejectionReason, Integer carId) {
         this.rentersName = rentersName;
-        this.leaseDate = leaseDate;
-        this.leaseTerm = leaseTerm;
-        this.returnDate = returnDate;
+        this.dateLeased = dateLeased;
         this.rentStatus = rentStatus;
         this.carRepairBill = carRepairBill;
         this.informationAboutDamage = informationAboutDamage;
         this.rejectionReason = rejectionReason;
+        this.carId = carId;
+    }
+
+    public CarOrder(Integer orderId, String rentersName, LocalDate dateLeased, boolean rentStatus, Double carRepairBill, String informationAboutDamage, String rejectionReason, Integer carId) {
+        this.orderId = orderId;
+        this.rentersName = rentersName;
+        this.dateLeased = dateLeased;
+        this.rentStatus = rentStatus;
+        this.carRepairBill = carRepairBill;
+        this.informationAboutDamage = informationAboutDamage;
+        this.rejectionReason = rejectionReason;
+        this.carId = carId;
     }
 
     public Integer getOrderId() {
@@ -63,28 +65,12 @@ public class CarOrder {
         this.rentersName = rentersName;
     }
 
-    public Date getLeaseDate() {
-        return leaseDate;
+    public LocalDate getDateLeased() {
+        return dateLeased;
     }
 
-    public void setLeaseDate(Date leaseDate) {
-        this.leaseDate = leaseDate;
-    }
-
-    public Integer getLeaseTerm() {
-        return leaseTerm;
-    }
-
-    public void setLeaseTerm(Integer leaseTerm) {
-        this.leaseTerm = leaseTerm;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
+    public void setDateLeased(LocalDate dateLeased) {
+        this.dateLeased = dateLeased;
     }
 
     public boolean isRentStatus() {
@@ -125,9 +111,7 @@ public class CarOrder {
                 "orderId=" + orderId +
                 ", carId=" + carId +
                 ", rentersName='" + rentersName + '\'' +
-                ", leaseDate=" + leaseDate +
-                ", leaseTerm=" + leaseTerm +
-                ", returnDate=" + returnDate +
+                ", dateLeased=" + dateLeased +
                 ", rentStatus=" + rentStatus +
                 ", carRepairBill=" + carRepairBill +
                 ", informationAboutDamage='" + informationAboutDamage + '\'' +

@@ -6,7 +6,7 @@ public class Car {
 
     private Integer carId;
 
-    private String modelCar;
+    private String carModel;
 
     private Integer yearOfIssue;
 
@@ -19,8 +19,17 @@ public class Car {
     public Car() {
     }
 
+    public Car(Integer carId, String carModel, Integer yearOfIssue, String carColor, Double pricePerDay, boolean leased) {
+        this.carId = carId;
+        this.carModel = carModel;
+        this.yearOfIssue = yearOfIssue;
+        this.carColor = carColor;
+        this.pricePerDay = pricePerDay;
+        this.leased = leased;
+    }
+
     public Car(String modelCar, Integer yearOfIssue, String carColor, Double pricePerDay, boolean leased) {
-        this.modelCar = modelCar;
+        this.carModel = modelCar;
         this.yearOfIssue = yearOfIssue;
         this.carColor = carColor;
         this.pricePerDay = pricePerDay;
@@ -36,11 +45,11 @@ public class Car {
     }
 
     public String getModelCar() {
-        return modelCar;
+        return carModel;
     }
 
     public void setModelCar(String modelCar) {
-        this.modelCar = modelCar;
+        this.carModel = modelCar;
     }
 
     public Integer getYearOfIssue() {
@@ -79,7 +88,7 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "carId=" + carId +
-                ", modelCar='" + modelCar + '\'' +
+                ", modelCar='" + carModel + '\'' +
                 ", yearOfIssue=" + yearOfIssue +
                 ", carColor='" + carColor + '\'' +
                 ", pricePerDay=" + pricePerDay +
@@ -92,11 +101,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return leased == car.leased && Objects.equals(carId, car.carId) && Objects.equals(modelCar, car.modelCar) && Objects.equals(yearOfIssue, car.yearOfIssue) && Objects.equals(carColor, car.carColor) && Objects.equals(pricePerDay, car.pricePerDay);
+        return leased == car.leased && Objects.equals(carId, car.carId) && Objects.equals(carModel, car.carModel) && Objects.equals(yearOfIssue, car.yearOfIssue) && Objects.equals(carColor, car.carColor) && Objects.equals(pricePerDay, car.pricePerDay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, modelCar, yearOfIssue, carColor, pricePerDay, leased);
+        return Objects.hash(carId, carModel, yearOfIssue, carColor, pricePerDay, leased);
     }
 }
