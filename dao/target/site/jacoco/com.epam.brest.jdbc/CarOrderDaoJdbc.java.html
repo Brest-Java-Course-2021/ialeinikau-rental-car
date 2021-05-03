@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarOrderDaoJdbc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dao</a> &gt; <a href="index.source.html" class="el_package">com.epam.brest.jdbc</a> &gt; <span class="el_source">CarOrderDaoJdbc.java</span></div><h1>CarOrderDaoJdbc.java</h1><pre class="source lang-java linenums">package com.epam.brest.jdbc;
+
+import com.epam.brest.dao.CarOrderDao;
+import com.epam.brest.model.CarOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.*;
+
+@Repository
+public class CarOrderDaoJdbc implements CarOrderDao {
+
+<span class="nc" id="L25">    public static final Logger LOGGER = LoggerFactory.getLogger(CarDaoJdbc.class);</span>
+
+    @Value(&quot;${carOrder.findAll}&quot;)
+    private String findAllSQL;
+
+    @Value(&quot;${carOrder.findById}&quot;)
+    private String findByIdSql;
+
+    @Value(&quot;${carOrder.create}&quot;)
+    private String createSQL;
+
+    @Value(&quot;${carOrder.update}&quot;)
+    private String updateSQL;
+
+    @Value(&quot;${carOrder.delete}&quot;)
+    private String deleteSQL;
+
+    @Value(&quot;${carOrder.searchByDate}&quot;)
+    private String searchByDate;
+
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+<span class="nc" id="L47">    public CarOrderDaoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {</span>
+<span class="nc" id="L48">        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;</span>
+<span class="nc" id="L49">    }</span>
+
+    @Override
+    public List&lt;CarOrder&gt; findAll() {
+<span class="nc" id="L53">        return namedParameterJdbcTemplate.query(findAllSQL, new CarOrderRowMapper());</span>
+    }
+
+    @Override
+    public Optional&lt;CarOrder&gt; findById(Integer carOrderId) {
+<span class="nc" id="L58">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_ORDER_ID&quot; ,carOrderId);</span>
+<span class="nc" id="L59">        List&lt;CarOrder&gt; results = namedParameterJdbcTemplate.query(findByIdSql, sqlParameterSource, new CarOrderRowMapper());</span>
+<span class="nc" id="L60">        return Optional.ofNullable(DataAccessUtils.uniqueResult(results));</span>
+    }
+
+    @Override
+    public Integer create(CarOrder carOrder) {
+<span class="nc" id="L65">        KeyHolder keyHolder =  new GeneratedKeyHolder();</span>
+<span class="nc" id="L66">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource()</span>
+<span class="nc" id="L67">                .addValue(&quot;RENTERS_NAME&quot;,carOrder.getRentersName())</span>
+<span class="nc" id="L68">                .addValue(&quot;DATE_LEASED&quot;,carOrder.getDateLeased())</span>
+<span class="nc" id="L69">                .addValue(&quot;RENT_STATUS&quot;,carOrder.getOrderId())</span>
+<span class="nc" id="L70">                .addValue(&quot;CAR_REPAIR_BILL&quot;,carOrder.getCarRepairBill())</span>
+<span class="nc" id="L71">                .addValue(&quot;INFO_ABOUT_DAMAGE&quot;,carOrder.getInformationAboutDamage())</span>
+<span class="nc" id="L72">                .addValue(&quot;REJECTION_REASON&quot;,carOrder.getRejectionReason())</span>
+<span class="nc" id="L73">                .addValue(&quot;CAR_ID&quot;,carOrder.getCarId());</span>
+<span class="nc" id="L74">        namedParameterJdbcTemplate.update(createSQL,sqlParameterSource,keyHolder);</span>
+<span class="nc" id="L75">        return Objects.requireNonNull(keyHolder.getKey().intValue());</span>
+    }
+
+    @Override
+    public Integer update(CarOrder carOrder) {
+<span class="nc" id="L80">        SqlParameterSource sqlParameterSource =</span>
+                new MapSqlParameterSource()
+<span class="nc" id="L82">                        .addValue(&quot;CAR_ORDER_ID&quot;,carOrder.getOrderId())</span>
+<span class="nc" id="L83">                        .addValue(&quot;RENTERS_NAME&quot;,carOrder.getRentersName())</span>
+<span class="nc" id="L84">                        .addValue(&quot;DATE_LEASED&quot;,carOrder.getDateLeased())</span>
+<span class="nc" id="L85">                        .addValue(&quot;RENT_STATUS&quot;,carOrder.getOrderId())</span>
+<span class="nc" id="L86">                        .addValue(&quot;CAR_REPAIR_BILL&quot;,carOrder.getCarRepairBill())</span>
+<span class="nc" id="L87">                        .addValue(&quot;INFO_ABOUT_DAMAGE&quot;,carOrder.getInformationAboutDamage())</span>
+<span class="nc" id="L88">                        .addValue(&quot;REJECTION_REASON&quot;,carOrder.getRejectionReason())</span>
+<span class="nc" id="L89">                        .addValue(&quot;CAR_ID&quot;,carOrder.getCarId());</span>
+<span class="nc" id="L90">        return namedParameterJdbcTemplate.update(updateSQL, sqlParameterSource);</span>
+    }
+
+    @Override
+    public Integer delete(Integer carOrderId) {
+<span class="nc" id="L95">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(&quot;CAR_ORDER_ID&quot;, carOrderId);</span>
+<span class="nc" id="L96">        return namedParameterJdbcTemplate.update(deleteSQL, sqlParameterSource);</span>
+    }
+
+    @Override
+    public List&lt;CarOrder&gt; searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (dateAfter.isBefore(dateBefore)) {</span>
+<span class="nc" id="L102">            LOGGER.warn(&quot;searchByTwoDates() throw IllegalArgumentException because Date After should be later than date before&quot;);</span>
+<span class="nc" id="L103">            throw new IllegalArgumentException(&quot;Date After should be later than date before&quot;);</span>
+        }
+<span class="nc" id="L105">        Map&lt;String, Object&gt; parametrizedValues = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L106">        parametrizedValues.put(&quot;DATE_BEFORE&quot;, dateBefore);</span>
+<span class="nc" id="L107">        parametrizedValues.put(&quot;DATE_AFTER&quot;, dateAfter);</span>
+<span class="nc" id="L108">        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);</span>
+<span class="nc" id="L109">        return namedParameterJdbcTemplate.query(searchByDate, sqlParameterSource, new CarOrderRowMapper());</span>
+    }
+
+<span class="nc" id="L112">    private class CarOrderRowMapper implements RowMapper&lt;CarOrder&gt; {</span>
+
+        @Override
+        public CarOrder mapRow(ResultSet resultSet, int i) throws SQLException {
+<span class="nc" id="L116">            return new CarOrder(</span>
+<span class="nc" id="L117">                    resultSet.getInt(&quot;CAR_ORDER_ID&quot;),</span>
+<span class="nc" id="L118">                    resultSet.getString(&quot;RENTERS_NAME&quot;),</span>
+<span class="nc" id="L119">                    resultSet.getDate(&quot;DATE_LEASED&quot;).toLocalDate(),</span>
+<span class="nc" id="L120">                    resultSet.getBoolean(&quot;RENT_STATUS&quot;),</span>
+<span class="nc" id="L121">                    resultSet.getDouble(&quot;CAR_REPAIR_BILL&quot;),</span>
+<span class="nc" id="L122">                    resultSet.getString(&quot;INFO_ABOUT_DAMAGE&quot;),</span>
+<span class="nc" id="L123">                    resultSet.getString(&quot;REJECTION_REASON&quot;),</span>
+<span class="nc" id="L124">                    resultSet.getInt(&quot;CAR_ID&quot;)</span>
+            );
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

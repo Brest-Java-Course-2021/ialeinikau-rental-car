@@ -14,8 +14,6 @@ import java.util.Optional;
 @Transactional
 public class CarServiceImpl implements CarService {
 
-    //TODO create and delete method
-
     private final CarDao carDao;
 
     @Autowired
@@ -35,12 +33,12 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Integer create(Car Car) {
-        return null;
+        return carDao.create(Car);
     }
 
     @Override
     public Integer update(Car Car) {
-        return null;
+        return carDao.update(Car);
     }
 
     @Override

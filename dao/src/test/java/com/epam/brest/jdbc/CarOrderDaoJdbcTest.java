@@ -16,8 +16,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJdbcTest
 @Import({CarOrderDaoJdbc.class})
@@ -105,4 +109,17 @@ class CarOrderDaoJdbcTest {
         Assert.assertNotNull(carOrders);
         Assert.assertEquals(carOrders.size()-1,realCarOrders.size());
     }
+
+    @Test
+    void searchByTwoDates(){
+        List<CarOrder> carOrders= carOrderDao.findAll();
+        Assert.assertNotNull(carOrders);
+        Assert.assertTrue(carOrders.size()>0);
+
+
+        List<CarOrder> orders = carOrderDao.searchByTwoDates(LocalDate.of(2021,05,01),LocalDate.of(2021,05,03));
+        assertNotNull(orders);
+        LOGGER.info(orders.toString());
+    }
+
 }

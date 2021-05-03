@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../resources/static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../../resources/static/css/style.css"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="../../resources/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../web-app/src/main/webapp/resources/static/css/style.css">
+    <title>Active Rentals</title>
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm text-light p-1">
+        <div class="container-fluid">
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="carRent.html" class="navbar-brand"><img src="../../resources/static/img/app.svg" height="32" width="32" alt="HR"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="carRent.html">Car rent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="allCars.html">Cars</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="activeRentals.html">Active rentals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rentalArchive.html">Rental archive</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav id="main-header"
+         class="py-1 mb-3 navbar navbar-light bg-light text-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand text-uppercase">Active rentals</span>
+        </div>
+    </nav>
+</header>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Car model</th>
+                            <th>Year of issue</th>
+                            <th>Car color</th>
+                            <th>Price per day</th>
+                            <th>Rental's name</th>
+                            <th>Lease date</th>
+                            <th>Lease term</th>
+                            <th>Return date</th>
+                            <th></th>
+                        </tr>
+                        <tbody>
+                    <tr>
+                        <td>Ford</td>
+                        <td>2014</td>
+                        <td>Black</td>
+                        <td>18$</td>
+                        <td>Ivan Ivanov</td>
+                        <td>20.01.2021</td>
+                        <td>8</td>
+                        <td>null</td>
+                        <td>
+                            <a href="#"
+                               class="btn-sm btn-outline-secondary"
+                               title="Edit car">
+                                <i class="bi bi-cart-check"></i><span class="d-none d-md-inline">&nbsp;Confirm</span>
+                            </a>
+                            <a href="#"
+                               class="btn-sm btn-outline-secondary"
+                               title="Edit car">
+                                <i class="bi bi-cart-x"></i><span class="d-none d-md-inline">&nbsp;Refuse</span>
+                            </a>
+                        </td>
+                    </tr>
+                        </tbody>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <hr/>
+    <p class="text-center"> &copy;Created by Ivan Aleinikau 2021</p>
+</footer>
+
+<script src="../../resources/static/js/bootstrap.bundle.min.js"
+        th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

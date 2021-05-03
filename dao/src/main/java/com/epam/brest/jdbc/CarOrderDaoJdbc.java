@@ -1,12 +1,10 @@
 package com.epam.brest.jdbc;
 
 import com.epam.brest.dao.CarOrderDao;
-import com.epam.brest.model.Car;
 import com.epam.brest.model.CarOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,13 +12,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
+@Repository
 public class CarOrderDaoJdbc implements CarOrderDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(CarDaoJdbc.class);
@@ -39,6 +38,9 @@ public class CarOrderDaoJdbc implements CarOrderDao {
 
     @Value("${carOrder.delete}")
     private String deleteSQL;
+
+    @Value("${carOrder.searchByDate}")
+    private String searchByDate;
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -92,6 +94,19 @@ public class CarOrderDaoJdbc implements CarOrderDao {
     public Integer delete(Integer carOrderId) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("CAR_ORDER_ID", carOrderId);
         return namedParameterJdbcTemplate.update(deleteSQL, sqlParameterSource);
+    }
+
+    @Override
+    public List<CarOrder> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
+        if (dateAfter.isBefore(dateBefore)) {
+            LOGGER.warn("searchByTwoDates() throw IllegalArgumentException because Date After should be later than date before");
+            throw new IllegalArgumentException("Date After should be later than date before");
+        }
+        Map<String, Object> parametrizedValues = new HashMap<>();
+        parametrizedValues.put("DATE_BEFORE", dateBefore);
+        parametrizedValues.put("DATE_AFTER", dateAfter);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
+        return namedParameterJdbcTemplate.query(searchByDate, sqlParameterSource, new CarOrderRowMapper());
     }
 
     private class CarOrderRowMapper implements RowMapper<CarOrder> {

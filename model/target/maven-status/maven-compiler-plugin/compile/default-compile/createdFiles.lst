@@ -1,2 +1,3 @@
 com/epam/brest/model/Car.class
 com/epam/brest/model/CarOrder.class
+com/epam/brest/model/dto/CarDto.class
