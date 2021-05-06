@@ -1,6 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-dao,com.epam.brest.jdbc,CarDaoJdbc,148,0,0,0,31,0,7,0,7,0
-dao,com.epam.brest.jdbc,CarDtoDaoJdbc,23,0,0,0,7,0,3,0,3,0
-dao,com.epam.brest.jdbc,CarDaoJdbc.CarRowMapper,31,0,0,0,8,0,2,0,2,0
-dao,com.epam.brest.jdbc,CarOrderDaoJdbc.CarOrderRowMapper,38,0,0,0,10,0,2,0,2,0
-dao,com.epam.brest.jdbc,CarOrderDaoJdbc,193,0,2,0,39,0,9,0,8,0
